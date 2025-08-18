@@ -1,23 +1,28 @@
-from pydantic import BaseModel
-from typing import List, Dict, Optional
+from pydantic import BaseModel, EmailStr, AnyUrl, Field
+from typing import List, Dict, Optional, Annotated
 
-class patient(BaseModel):
-    name: str
-    age: int
-    weight : float
-    allergies :Optional[ List[str]]
-    contact_detalies : Dict[str, str]
+class Patient(BaseModel):
 
-def insert_patient_data(patient: patient):
+    name: Annotated[str, Field(max_length=50, title='Name of the patient', description='Give the name of the patient in less than 50 chars', examples=['Tashfeen', 'Aziz'])]
+    email: EmailStr
+    linkedin_url: AnyUrl
+    age: int = Field(gt=0, lt=120)
+    weight: Annotated[float, Field(gt=0, strict=True)]
+    married: Annotated[bool, Field(default=None, description='Is the patient married or not')]
+    allergies: Annotated[Optional[List[str]], Field(default=None, max_length=5)]
+    contact_details: Dict[str, str]
+
+
+def update_patient_data(patient: Patient):
+
     print(patient.name)
     print(patient.age)
-    print(patient.weight)
     print(patient.allergies)
-    print(patient.contact_detalies)
-    print('inserted into database')
-    
-patient_info = {'name': 'Tashfeen Aziz', 'age':30, 'weight': 63.6, 'allergies': ['pollen', 'dust'], 'contact_detalies': {'email': 'abc@gmail.com', 'phone': '1234567890'}}
+    print(patient.married)
+    print('updated')
 
-patient1 = patient(**patient_info)
+patient_info = {'name':'Tashfeen', 'email':'abc@gmail.com', 'linkedin_url':'http://linkedin.com/1322', 'age': '30', 'weight': 75.2,'contact_details':{'phone':'2353462'}}
 
-insert_patient_data(patient1)
+patient1 = Patient(**patient_info)
+
+update_patient_data(patient1)
