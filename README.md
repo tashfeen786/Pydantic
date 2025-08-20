@@ -25,7 +25,7 @@ This repo demonstrates:
 
 Clone the repo and install dependencies:
 
-git clone https:[//github.com/your-username/pydantic-learning.git](https://github.com/tashfeen786/Pydantic/tree/main) 
+git clone https:(https://github.com/tashfeen786/Pydantic/tree/main) 
 cd pydantic-learning
 
 📝 Example Usage
